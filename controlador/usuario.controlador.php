@@ -2,15 +2,16 @@
 
 class ControladorUsuarios{
 
-    public function ctrIngresoUsuario(){
+    static public function ctrIngresoUsuario(){
         if(isset($_POST["entryUsuario"]) && isset($_POST["entryPassword"]))
         {
             if(preg_match('/^[a-zA-Z0-9]+$/', $_POST["entryUsuario"]) &&
             preg_match('/^[a-zA-Z0-9]+$/', $_POST["entryPassword"])){
-                $result = ModeloUsuario::mdlMostarUsuario("Recepcionista",
-                    "usuario", $_POST["entryUsuario"]);
 
-                if($result["pass"] == $_POST["entryPassword"])
+                $usuario = new ModeloUsuario();
+                $usuario->readByUsername($_POST["entryUsuario"]);
+
+                if($usuario->getPassword() == $_POST["entryPassword"])
                 {
                     $_SESSION["iniciarSesion"] = True;
 
@@ -23,6 +24,13 @@ class ControladorUsuarios{
                 }
             }
         }
+    }
+
+    static public function ctrMostrarUsuario(){
+
+        $respuesta = new ModeloUsuario();
+
+        return $respuesta->read();
     }
 
 }

@@ -46,22 +46,35 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Jonathan Alexander Guillen Lainez</td>
-                <td>Jon</td>
-                <td><img src="vistas/resources/zoe.png" class="btn-thumbnail" width="30px"></td>
-                <td>x</td>
-                <td>882857411</td>
-                <td>Administador</td>
-                <td><button class="btn btn-success btn-sm">Activado</button></td>
-                <td>
-                  <div class="btn-group">
-                    <button class="btn btn-warning btn-sm" style="color: white;"><i class="fa fa-pencil"></i></button>
-                    <button class="btn btn-danger btn-sm"><i class="fa fa-x"></i></button>
-                  </div>
-                </td>
-              </tr>
+              <?php
+                $usuarios = ControladorUsuarios::ctrMostrarUsuario();
+
+                foreach($usuarios as $usuario){
+                  echo '<tr>';
+                    echo '<td>'.$usuario->getId().'</td>';
+                    echo '<td>'.$usuario->getNombres().' '.$usuario->getApellidos().'</td>';
+                    echo '<td>'.$usuario->getUsuario().'</td>';
+                    echo '<td><img src="vistas/resources/zoe.png" class="btn-thumbnail" width="30px"></td>';
+                    echo '<td>'.$usuario->getCedula().'</td>';
+                    echo '<td>'.$usuario->getTelefono().'</td>';
+                    echo '<td>'.$usuario->getPerfil().'</td>';
+
+                    if($usuario->getEstado()){
+                      echo '<td><button class="btn btn-success btn-sm">Activado</button></td>';
+                    }else{
+                      echo '<td><button class="btn btn-danger btn-sm">Desactivado</button></td>';
+                    }
+                    
+                    echo '<td>';
+                      echo '<div class="btn-group">';
+                        echo '<button class="btn btn-warning btn-sm" style="color: white;"><i class="fa fa-pencil"></i></button>';
+                        echo '<button class="btn btn-danger btn-sm"><i class="fa fa-x"></i></button>';
+                      echo '</div>';
+                    echo '</td>';
+                  echo '</tr>';
+                }
+
+              ?>
             </tbody>
           </table>
         </div>

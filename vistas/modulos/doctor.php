@@ -43,19 +43,32 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Jonathan Alexander Guillen Lainez</td>
-                <td>1154</td>
-                <td>882857411</td>
-                <td><button class="btn btn-success btn-sm">Activado</button></td>
-                <td>
-                  <div class="btn-group">
-                    <button class="btn btn-warning btn-sm" style="color: white;"><i class="fa fa-pencil"></i></button>
-                    <button class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button>
-                  </div>
-                </td>
-              </tr>
+              <?php
+                $doctores = ControladorDoctor::ctrMostrarDoctor();
+
+                foreach($doctores as $doctor){
+                  echo '<tr>';
+                    echo '<td>'.$doctor->getId().'</td>';
+                    echo '<td>'.$doctor->getNombres().' '.$doctor->getApellidos().'</td>';
+                    echo '<td>'.$doctor->getCodigoSanitario().'</td>';
+                    echo '<td>'.$doctor->getTelefono().'</td>';
+                    
+                    if($doctor->getEstado()){
+                      echo '<td><button class="btn btn-success btn-sm">Activado</button></td>';
+                    }else{
+                      echo '<td><button class="btn btn-danger btn-sm">Desactivado</button></td>';
+                    }
+                    
+                    echo '<td>';
+                      echo '<div class="btn-group">';
+                        echo '<button class="btn btn-warning btn-sm" style="color: white;"><i class="fa fa-pencil"></i></button>';
+                        echo '<button class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button>';
+                      echo '</div>';
+                    echo '</td>';
+                  echo '</tr>';
+                }
+
+              ?>
             </tbody>
           </table>
         </div>

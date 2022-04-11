@@ -178,9 +178,8 @@ BEGIN
 	     	  INSERT INTO Cliente(nombres, apellidos, nacimiento, inss, direccion, telefono, sexo)
 		  	 VALUES (pnombres, papellidos, pnacimiento, pinss, pdireccion, ptelefono, psexo);
 	     WHEN 'R' THEN
-	     	  SELECT idCliente, nombres, apellidos, DATE_FORMAT(nacimiento, '%d/%m/%Y') as 'nacimiento', inss, direccion, telefono, sexo
-		  	 FROM Cliente WHERE estado=TRUE
-			 AND (pid IS NULL OR idCliente=pid);
+	     	  SELECT idCliente, nombres, apellidos, DATE_FORMAT(nacimiento, '%d/%m/%Y') as 'nacimiento', edad, inss, direccion, telefono, sexo, estado
+		  	 FROM Cliente;
 	     WHEN 'U' THEN
 	     	  UPDATE Cliente set nombres=pnombres, apellidos=papellidos,
 		  	 nacimiento=pnacimiento, inss=pinss, direccion=pdireccion,
@@ -203,9 +202,7 @@ BEGIN
 	     	  INSERT INTO Medico(nombres, apellidos, codigoSanitario, telefono)
 		  	 VALUES (pnombres, papellidos, pcodigoSani, ptelefono);
 	     WHEN 'R' THEN
-	     	  SELECT idMedico, nombres, apellidos, codigoSanitario, telefono
-		  	 FROM Medico WHERE estado=TRUE
-			 AND (pid IS NULL OR idMedico=pid);
+	     	  SELECT * FROM Medico;
 	     WHEN 'U' THEN
 	     	  UPDATE Medico set nombres=pnombres, apellidos=papellidos,
 		  	 codigoSanitario=pcodigoSani, telefono=ptelefono
@@ -221,19 +218,17 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE RecepcionistaCrud(operacion char, pid int, pnombres varchar(20),
        papellidos varchar(20), pcedula varchar(20), ptelefono varchar(10),
-       pfoto varchar(100), pusuario varchar(20), ppass varchar(100))
+       pfoto varchar(100), pusuario varchar(20), ppass varchar(100), pperfil varchar(20))
 BEGIN
 	CASE operacion
 	     WHEN 'C' THEN
 	     	  INSERT INTO Recepcionista(nombres, apellidos, cedula, telefono, foto, usuario, pass, perfil)
-		  	 VALUES (pnombres, papellidos, pcedula, ptelefono, pfoto, pusuario, ppass, 'estandar');
+		  	 VALUES (pnombres, papellidos, pcedula, ptelefono, pfoto, pusuario, ppass, pperfil);
 	     WHEN 'R' THEN
-	     	  SELECT idRecepcionista, nombres, apellidos, cedula, telefono, foto, usuario
-		  	 FROM Recepcionista WHERE estado=TRUE
-			 AND (pid IS NULL OR idRecepcionista=pid);
+	     	  SELECT * FROM Recepcionista;
 	     WHEN 'U' THEN
 	     	  UPDATE Recepcionista set nombres=pnombres, apellidos=papellidos,
-		  	 cedula=pcedula, telefono=ptelefono, foto=pfoto, usuario=pusuario, pass=ppass, perfil='estandar'
+		  	 cedula=pcedula, telefono=ptelefono, foto=pfoto, usuario=pusuario, pass=ppass, perfil=pperfil
 		   	 WHERE idRecepcionista=pid;
 	     WHEN 'D' THEN
 	     	  UPDATE Recepcionista SET estado=FALSE WHERE idRecepcionista=pid;
@@ -252,9 +247,7 @@ BEGIN
 	     	  INSERT INTO UnidadDeSalud(nombre, departamento, telefono)
 		  	 VALUES (pnombre, pdepartamento, ptelefono);
 	     WHEN 'R' THEN
-	     	  SELECT idUnidadDeSalud, nombre, departamento, telefono
-		  	 FROM UnidadDeSalud WHERE estado=TRUE
-			 AND (pid IS NULL OR idUnidadDeSalud=pid);
+	     	  SELECT * FROM UnidadDeSalud;
 	     WHEN 'U' THEN
 	     	  UPDATE UnidadDeSalud set nombre=pnombre, departamento=pdepartamento, telefono=ptelefono
 		   	 WHERE idUnidadDeSalud=pid;
