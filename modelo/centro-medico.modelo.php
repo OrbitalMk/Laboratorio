@@ -1,7 +1,5 @@
 <?php
 
-require_once "conexion.php";
-
 class ModeloCentroMedico extends Model implements IModel{
 
     private $id;
@@ -58,7 +56,7 @@ class ModeloCentroMedico extends Model implements IModel{
     }
 
     public function read(){
-        //try{
+        try{
             $centros = [];
 
             $query = $this->prepare('CALL UnidadCrud(:operacion, :id, :nombre, :departamento, :telefono)');
@@ -82,9 +80,9 @@ class ModeloCentroMedico extends Model implements IModel{
             }
 
             return $centros;
-        /*}catch(PDOException $e){
+        }catch(PDOException $e){
             //Errorlog
-        }*/
+        }
     }
 
     public function delete(){
